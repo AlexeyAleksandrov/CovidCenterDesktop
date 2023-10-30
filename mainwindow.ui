@@ -19,6 +19,10 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="sources.qrc">
+    <normaloff>:/src/img/src/logo.ico</normaloff>:/src/img/src/logo.ico</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">MainWindow{
 background:rgb(255, 255, 255);
@@ -392,7 +396,7 @@ border: 0px;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">image: url(:/src/img/sources/logo.png);</string>
+          <string notr="true">image: url(:/src/img/src/logo.png);</string>
          </property>
          <property name="text">
           <string/>
@@ -405,7 +409,7 @@ border: 0px;</string>
     <item row="2" column="1">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page_client_auth">
        <layout class="QGridLayout" name="gridLayout_2">
@@ -922,13 +926,13 @@ QPushButton::hover{
          </spacer>
         </item>
         <item row="1" column="1" colspan="2">
-         <widget class="QGroupBox" name="groupBox_3">
+         <widget class="QGroupBox" name="groupBox_member_auth">
           <property name="title">
            <string>Авторизация для сотрудников</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_7">
            <item row="2" column="0">
-            <widget class="QLineEdit" name="lineEdit_6">
+            <widget class="QLineEdit" name="lineEdit_member_auth_login">
              <property name="focusPolicy">
               <enum>Qt::StrongFocus</enum>
              </property>
@@ -941,7 +945,7 @@ QPushButton::hover{
             </widget>
            </item>
            <item row="10" column="0">
-            <widget class="QPushButton" name="pushButton_8">
+            <widget class="QPushButton" name="pushButton_member_auth_move_to_registration_for_members">
              <property name="font">
               <font>
                <family>Comic Sans MS</family>
@@ -975,7 +979,7 @@ QPushButton::hover{
             </widget>
            </item>
            <item row="7" column="0">
-            <widget class="QPushButton" name="pushButton_9">
+            <widget class="QPushButton" name="pushButton_member_auth_forgot_password">
              <property name="font">
               <font>
                <family>Comic Sans MS</family>
@@ -1009,14 +1013,14 @@ QPushButton::hover{
             </widget>
            </item>
            <item row="4" column="0">
-            <widget class="QLabel" name="label_12">
+            <widget class="QLabel" name="label_member_auth_password">
              <property name="text">
               <string>Пароль:</string>
              </property>
             </widget>
            </item>
            <item row="9" column="0">
-            <widget class="QPushButton" name="pushButton_10">
+            <widget class="QPushButton" name="pushButton_member_auth_sign_in">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1029,14 +1033,14 @@ QPushButton::hover{
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_13">
+            <widget class="QLabel" name="label_member_auth_login">
              <property name="text">
               <string>Логин:</string>
              </property>
             </widget>
            </item>
            <item row="5" column="0">
-            <widget class="QLineEdit" name="lineEdit_7">
+            <widget class="QLineEdit" name="lineEdit_member_auth_password">
              <property name="focusPolicy">
               <enum>Qt::StrongFocus</enum>
              </property>
@@ -1052,7 +1056,7 @@ QPushButton::hover{
             </widget>
            </item>
            <item row="11" column="0">
-            <widget class="QPushButton" name="pushButton_11">
+            <widget class="QPushButton" name="pushButton_member_auth_move_to_auth_for_clients">
              <property name="font">
               <font>
                <family>Comic Sans MS</family>
@@ -1145,20 +1149,70 @@ QPushButton::hover{
          </spacer>
         </item>
         <item row="1" column="1" rowspan="2" colspan="2">
-         <widget class="QGroupBox" name="groupBox_4">
+         <widget class="QGroupBox" name="groupBox_member_registration">
           <property name="title">
            <string>Регистрация для сотрудников</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_9">
+           <item row="5" column="0">
+            <widget class="QLineEdit" name="lineEdit_member_registration_password">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="echoMode">
+              <enum>QLineEdit::Password</enum>
+             </property>
+             <property name="placeholderText">
+              <string>пароль</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_member_registration_login">
+             <property name="text">
+              <string>Логин:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLineEdit" name="lineEdit_member_registration_login">
+             <property name="focusPolicy">
+              <enum>Qt::StrongFocus</enum>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="placeholderText">
+              <string>логин</string>
+             </property>
+            </widget>
+           </item>
            <item row="4" column="0">
-            <widget class="QLabel" name="label_14">
+            <widget class="QLabel" name="label_member_registration_password">
              <property name="text">
               <string>Пароль:</string>
              </property>
             </widget>
            </item>
-           <item row="11" column="0">
-            <widget class="QPushButton" name="pushButton_12">
+           <item row="6" column="0">
+            <widget class="QLabel" name="label_member_registration_password_confirm">
+             <property name="text">
+              <string>Повтор пароля:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QLabel" name="label_member_registration_password_message">
+             <property name="text">
+              <string>Пароли должны совпадать!</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="0">
+            <widget class="QPushButton" name="pushButton_member_registration_move_to_auth_for_members">
              <property name="font">
               <font>
                <family>Comic Sans MS</family>
@@ -1191,42 +1245,8 @@ QPushButton::hover{
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="label_15">
-             <property name="text">
-              <string>Пароли должны совпадать!</string>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="label_16">
-             <property name="text">
-              <string>Логин:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLineEdit" name="lineEdit_8">
-             <property name="focusPolicy">
-              <enum>Qt::StrongFocus</enum>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="placeholderText">
-              <string>логин</string>
-             </property>
-            </widget>
-           </item>
-           <item row="6" column="0">
-            <widget class="QLabel" name="label_17">
-             <property name="text">
-              <string>Повтор пароля:</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="0">
-            <widget class="QPushButton" name="pushButton_13">
+           <item row="11" column="0">
+            <widget class="QPushButton" name="pushButton_member_registration_sign_up">
              <property name="minimumSize">
               <size>
                <width>0</width>
@@ -1238,24 +1258,8 @@ QPushButton::hover{
              </property>
             </widget>
            </item>
-           <item row="5" column="0">
-            <widget class="QLineEdit" name="lineEdit_9">
-             <property name="focusPolicy">
-              <enum>Qt::StrongFocus</enum>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-             <property name="echoMode">
-              <enum>QLineEdit::Password</enum>
-             </property>
-             <property name="placeholderText">
-              <string>пароль</string>
-             </property>
-            </widget>
-           </item>
            <item row="7" column="0">
-            <widget class="QLineEdit" name="lineEdit_10">
+            <widget class="QLineEdit" name="lineEdit_member_registration_password_confirm">
              <property name="focusPolicy">
               <enum>Qt::StrongFocus</enum>
              </property>
@@ -1350,6 +1354,8 @@ QPushButton::hover{
   <tabstop>pushButton_client_auth_forgot_password</tabstop>
   <tabstop>pushButton_logout</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="sources.qrc"/>
+ </resources>
  <connections/>
 </ui>

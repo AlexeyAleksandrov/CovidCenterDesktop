@@ -6,8 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->label->setFocusPolicy(Qt::WheelFocus);
-    ui->label->setFocus(Qt::OtherFocusReason);
+    ui->label_logo_img->setFocusPolicy(Qt::WheelFocus);
+    ui->label_logo_img->setFocus(Qt::OtherFocusReason);
 }
 
 MainWindow::~MainWindow()
