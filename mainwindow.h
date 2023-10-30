@@ -17,5 +17,7 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    void clearFocus();
 };
 #endif // MAINWINDOW_H
