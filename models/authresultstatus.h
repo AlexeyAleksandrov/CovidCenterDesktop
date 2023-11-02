@@ -1,0 +1,14 @@
+#ifndef AUTHRESULTSTATUS_H
+#define AUTHRESULTSTATUS_H
+
+enum class AuthResultStatus
+{
+    NOT_AUTH,
+    SUCCESSFULL,
+    FAILED,
+    INCORRECT_LOGIN,
+    INCORRECT_PASSWORD,
+    BANNED
+};
+
+#endif // AUTHRESULTSTATUS_H

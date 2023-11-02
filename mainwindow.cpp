@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include <models/signinmodel.h>
+
 #define PAGE_CLIENT_AUTH 0
 #define PAGE_CLIENT_REGISTRATION 1
 #define PAGE_MEMBER_AUTH 2
@@ -34,5 +36,12 @@ void MainWindow::clearFocus()
 {
     ui->label_logo_img->setFocusPolicy(Qt::WheelFocus);
     ui->label_logo_img->setFocus(Qt::OtherFocusReason);
+}
+
+
+// авторизация клиента
+void MainWindow::on_pushButton_client_auth_sign_in_clicked()
+{
+    SignInModel signInModel(ui->lineEdit_client_auth_login->text(), ui->lineEdit_client_auth_password->text());     // модель авторизации
 }
 

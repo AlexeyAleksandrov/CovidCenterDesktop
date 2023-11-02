@@ -16,6 +16,19 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets LinguistTools REQUIRED)
 
 #set(TS_FILES CovidCenterDesktop_ru_RU.ts)
 
+set(MODELS
+    models/signinmodel.h models/signinmodel.cpp
+    models/signupmodel.h models/signupmodel.cpp
+    models/authresult.h models/authresult.cpp
+    models/authresultstatus.h models/authresultstatus.cpp
+    models/registerresult.h models/registerresult.cpp
+    models/registerresultstatus.h models/registerresultstatus.cpp)
+
+set(SERVICES
+    services/authservice.h services/authservice.cpp
+    services/membersauthservice.h services/membersauthservice.cpp
+    services/clientsauthservice.h services/clientsauthservice.cpp)
+
 set(PROJECT_SOURCES
         main.cpp
         mainwindow.cpp
@@ -24,6 +37,14 @@ set(PROJECT_SOURCES
         sources.qrc
         customstyles.h
         customstyles.cpp
+        ${MODELS}
+        ${SERVICES}
+#        models/signinmodel.h
+#        models/signinmodel.cpp
+#        models/signupmodel.h
+#        models/signupmodel.cpp
+#        services/authservice.h
+#        services/authservice.cpp
 #        ${TS_FILES}
 )
 
