@@ -1,13 +1,8 @@
 #include "authresult.h"
 
-AuthResult::AuthResult(QObject *parent) : QObject(parent)
-{
-
-}
-
 AuthResult::AuthResult(AuthResultStatus status)
 {
-
+    this->status = status;
 }
 
 AuthResultStatus AuthResult::getStatus() const

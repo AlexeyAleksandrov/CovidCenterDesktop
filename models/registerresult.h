@@ -1,21 +1,15 @@
 #ifndef REGISTERRESULT_H
 #define REGISTERRESULT_H
 
-#include <QObject>
-
 #include "registerresultstatus.h"
 
-class RegisterResult : public QObject
+class RegisterResult
 {
-    Q_OBJECT
 public:
-    explicit RegisterResult(QObject *parent = nullptr);
     RegisterResult(RegisterResultStatus status);
 
     RegisterResultStatus getStatus() const;
     void setStatus(RegisterResultStatus newStatus);
-
-signals:
 
 private:
     RegisterResultStatus status;

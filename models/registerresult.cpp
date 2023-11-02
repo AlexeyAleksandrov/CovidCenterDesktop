@@ -1,10 +1,5 @@
 #include "registerresult.h"
 
-RegisterResult::RegisterResult(QObject *parent) : QObject(parent)
-{
-
-}
-
 RegisterResult::RegisterResult(RegisterResultStatus status) : status(status)
 {}
 

@@ -5,10 +5,7 @@
 
 class MembersAuthService : public AuthService
 {
-public:
-    explicit MembersAuthService(QObject *parent = nullptr);
-
-    // AuthService interface
+// AuthService interface
 public:
     AuthResult authUser(SignInModel signInModel) override;
     RegisterResult registerUser(SignUpModel signInModel) override;
