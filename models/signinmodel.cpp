@@ -1,10 +1,5 @@
 #include "signinmodel.h"
 
-SignInModel::SignInModel(QObject *parent) : QObject(parent)
-{
-
-}
-
 SignInModel::SignInModel(const QString &login, const QString &password) : login(login), password(password)
 {
 

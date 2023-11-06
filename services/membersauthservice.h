@@ -2,6 +2,7 @@
 #define MEMBERSAUTHSERVICE_H
 
 #include "authservice.h"
+#include <QRegularExpression>
 
 class MembersAuthService : public AuthService
 {
