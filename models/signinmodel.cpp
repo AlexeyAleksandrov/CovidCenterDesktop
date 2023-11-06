@@ -1,8 +1,9 @@
 #include "signinmodel.h"
 
-SignInModel::SignInModel(const QString &login, const QString &password) : login(login), password(password)
+SignInModel::SignInModel(const QString &login, const QString &password)
 {
-
+    this->login = login;
+    this->password = password;
 }
 
 const QString &SignInModel::getLogin() const

@@ -18,6 +18,12 @@ public:
 private slots:
     void on_pushButton_client_auth_sign_in_clicked();
 
+    void on_pushButton_member_auth_sign_in_clicked();
+
+    void on_pushButton_checkLogin_clicked();
+
+    void on_pushButton_logout_clicked();
+
 private:
     Ui::MainWindow *ui;
 

@@ -407,12 +407,15 @@ border: 0px;</string>
     </item>
     <item row="2" column="1">
      <widget class="QStackedWidget" name="stackedWidget_main">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
       <widget class="QWidget" name="page_auth">
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="0" column="0">
          <widget class="QStackedWidget" name="stackedWidget_auth">
           <property name="currentIndex">
-           <number>0</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page_client_auth">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -491,9 +494,7 @@ border: 0px;</string>
                 <widget class="QPushButton" name="pushButton_client_auth_move_to_registation">
                  <property name="font">
                   <font>
-                   <family>Comic Sans MS</family>
                    <pointsize>12</pointsize>
-                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -525,9 +526,7 @@ QPushButton::hover{
                 <widget class="QPushButton" name="pushButton_client_auth_forgot_password">
                  <property name="font">
                   <font>
-                   <family>Comic Sans MS</family>
                    <pointsize>12</pointsize>
-                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -602,9 +601,7 @@ QPushButton::hover{
                 <widget class="QPushButton" name="pushButton_client_auth_move_to_auth_for_members">
                  <property name="font">
                   <font>
-                   <family>Comic Sans MS</family>
                    <pointsize>12</pointsize>
-                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -734,9 +731,7 @@ QPushButton::hover{
                 <widget class="QPushButton" name="pushButton_client_registration_move_to_client_auth">
                  <property name="font">
                   <font>
-                   <family>Comic Sans MS</family>
                    <pointsize>12</pointsize>
-                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -940,7 +935,7 @@ QPushButton::hover{
                   <enum>Qt::StrongFocus</enum>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>nmably1</string>
                  </property>
                  <property name="placeholderText">
                   <string>логин</string>
@@ -951,9 +946,7 @@ QPushButton::hover{
                 <widget class="QPushButton" name="pushButton_member_auth_move_to_registration_for_members">
                  <property name="font">
                   <font>
-                   <family>Comic Sans MS</family>
                    <pointsize>12</pointsize>
-                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -985,9 +978,7 @@ QPushButton::hover{
                 <widget class="QPushButton" name="pushButton_member_auth_forgot_password">
                  <property name="font">
                   <font>
-                   <family>Comic Sans MS</family>
                    <pointsize>12</pointsize>
-                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -1048,7 +1039,7 @@ QPushButton::hover{
                   <enum>Qt::StrongFocus</enum>
                  </property>
                  <property name="text">
-                  <string/>
+                  <string>ukM0e6</string>
                  </property>
                  <property name="echoMode">
                   <enum>QLineEdit::Password</enum>
@@ -1062,9 +1053,7 @@ QPushButton::hover{
                 <widget class="QPushButton" name="pushButton_member_auth_move_to_auth_for_clients">
                  <property name="font">
                   <font>
-                   <family>Comic Sans MS</family>
                    <pointsize>12</pointsize>
-                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -1218,9 +1207,7 @@ QPushButton::hover{
                 <widget class="QPushButton" name="pushButton_member_registration_move_to_auth_for_members">
                  <property name="font">
                   <font>
-                   <family>Comic Sans MS</family>
                    <pointsize>12</pointsize>
-                   <weight>50</weight>
                    <italic>false</italic>
                    <bold>false</bold>
                   </font>
@@ -1338,7 +1325,31 @@ QPushButton::hover{
         </item>
        </layout>
       </widget>
-      <widget class="QWidget" name="page_2"/>
+      <widget class="QWidget" name="page_member">
+       <widget class="QPushButton" name="pushButton_checkLogin">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>100</y>
+          <width>251</width>
+          <height>61</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Узнать мой логин</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_jwtToken">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>230</y>
+          <width>711</width>
+          <height>31</height>
+         </rect>
+        </property>
+       </widget>
+      </widget>
      </widget>
     </item>
    </layout>
@@ -1349,7 +1360,7 @@ QPushButton::hover{
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
