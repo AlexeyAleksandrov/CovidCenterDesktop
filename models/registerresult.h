@@ -3,6 +3,9 @@
 
 #include "registerresultstatus.h"
 
+#include <QMap>
+#include <QString>
+
 class RegisterResult
 {
 public:
@@ -11,8 +14,12 @@ public:
     RegisterResultStatus getStatus() const;
     void setStatus(RegisterResultStatus newStatus);
 
+    QString getErrorText();     // получить текст ошибки
+
 private:
     RegisterResultStatus status;
+
+    QMap<RegisterResultStatus, QString> errorsText;     // тексты ошибок
 };
 
 #endif // REGISTERRESULT_H

@@ -415,7 +415,7 @@ border: 0px;</string>
         <item row="0" column="0">
          <widget class="QStackedWidget" name="stackedWidget_auth">
           <property name="currentIndex">
-           <number>2</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="page_client_auth">
            <layout class="QGridLayout" name="gridLayout_2">

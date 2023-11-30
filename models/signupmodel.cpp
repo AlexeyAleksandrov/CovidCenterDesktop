@@ -1,15 +1,11 @@
 #include "signupmodel.h"
 
-SignUpModel::SignUpModel(QObject *parent) : QObject(parent)
+SignUpModel::SignUpModel(const QString &login, const QString &password, const QString &passwordConfirm)
 {
-
+    this->login = login;
+    this->password = password;
+    this->passwordConfirm = passwordConfirm;
 }
-
-SignUpModel::SignUpModel(const QString &login, const QString &password, const QString &passwordConfirm) :
-    login(login),
-    password(password),
-    passwordConfirm(passwordConfirm)
-{}
 
 const QString &SignUpModel::getLogin() const
 {
@@ -39,4 +35,14 @@ const QString &SignUpModel::getPasswordConfirm() const
 void SignUpModel::setPasswordConfirm(const QString &newPasswordConfirm)
 {
     passwordConfirm = newPasswordConfirm;
+}
+
+const QString &SignUpModel::getFullName() const
+{
+    return fullName;
+}
+
+void SignUpModel::setFullName(const QString &newFullName)
+{
+    fullName = newFullName;
 }

@@ -4,6 +4,7 @@
 enum class AuthResultStatus
 {
     NOT_AUTH,
+    FORM_VALID_SUCCESSFULL,
     SUCCESSFULL,
     FAILED,
     INCORRECT_LOGIN,

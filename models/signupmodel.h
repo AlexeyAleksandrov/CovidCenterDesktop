@@ -1,13 +1,12 @@
 #ifndef SIGNUPMODEL_H
 #define SIGNUPMODEL_H
 
-#include <QObject>
+#include <QString>
 
-class SignUpModel : public QObject
+class SignUpModel
 {
-    Q_OBJECT
+
 public:
-    explicit SignUpModel(QObject *parent = nullptr);
     SignUpModel(const QString &login, const QString &password, const QString &passwordConfirm);
 
     const QString &getLogin() const;
@@ -17,9 +16,12 @@ public:
     const QString &getPasswordConfirm() const;
     void setPasswordConfirm(const QString &newPasswordConfirm);
 
-signals:
+
+    const QString &getFullName() const;
+    void setFullName(const QString &newFullName);
 
 private:
+    QString fullName;
     QString login;
     QString password;
     QString passwordConfirm;

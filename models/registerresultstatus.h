@@ -4,6 +4,7 @@
 enum class RegisterResultStatus
 {
     NOT_REGISTER,
+    FORM_VALID_SUCCESSFULL,
     SUCCESSFULL,
     FAILED,
     INCORRECT_LOGIN,

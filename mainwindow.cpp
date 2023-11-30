@@ -63,7 +63,8 @@ void MainWindow::on_pushButton_client_auth_sign_in_clicked()
 void MainWindow::on_pushButton_member_auth_sign_in_clicked()
 {
     // модель авторизации
-    SignInModel signInModel(ui->lineEdit_member_auth_login->text(), ui->lineEdit_member_auth_password->text());
+    SignInModel signInModel(ui->lineEdit_member_auth_login->text(),
+                            ui->lineEdit_member_auth_password->text());
 
     // сервис авторизации
     MembersAuthService memberAuthService;
@@ -87,6 +88,20 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
     QMessageBox::information(this, "Авторизация", "Вы успешно авторизовались!");
 }
 
+// кнопка регистрации сотрудника
+void MainWindow::on_pushButton_member_registration_sign_up_clicked()
+{
+    // форма регистрации
+    SignUpModel signUpModel(ui->lineEdit_member_registration_login->text(),
+                            ui->lineEdit_member_registration_password->text(),
+                            ui->lineEdit_member_registration_password_confirm->text());
+
+    // проверка формы
+    MembersAuthService memberAuthService;
+    memberAuthService.registerUser(signUpModel);
+
+}
+
 // кнопка проверки логина
 void MainWindow::on_pushButton_checkLogin_clicked()
 {
@@ -105,7 +120,7 @@ void MainWindow::on_pushButton_checkLogin_clicked()
     QMessageBox::information(this, "Логин", "Ваш логин: " + result);
 }
 
-// кнопка выхода
+// кнопка выхода для сотрудника
 void MainWindow::on_pushButton_logout_clicked()
 {
     ui->stackedWidget_main->setCurrentIndex(PAGE_AUTH);   // переключаемся на страницу пользователя
@@ -113,4 +128,5 @@ void MainWindow::on_pushButton_logout_clicked()
     ui->label_time_left->setText("");
     ui->pushButton_logout->hide();
 }
+
 
