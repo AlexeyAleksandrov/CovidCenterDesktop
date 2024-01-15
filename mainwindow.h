@@ -1,7 +1,11 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "timerthread.h"
+
 #include <QMainWindow>
+#include <QTimer>
+#include <QCloseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,9 +30,17 @@ private slots:
 
     void on_pushButton_member_registration_sign_up_clicked();
 
+private slots:
+    void onTimer();
+    void closeEvent(QCloseEvent *closeEvent);
+
 private:
     Ui::MainWindow *ui;
 
     void clearFocus();
+
+//    QTimer timer;   // таймер для автоматического выхода
+    TimerThread timerThread;
+    int timerTime = -1; // текущее время таймера
 };
 #endif // MAINWINDOW_H

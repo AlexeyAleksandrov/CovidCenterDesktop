@@ -10,6 +10,8 @@
 #include <QMessageBox>
 #include <QUrl>
 
+#define ALLOW_WORK_TIME 10   // в секундах
+
 #define PAGE_AUTH 0
 #define PAGE_MEMBER 1
 
@@ -39,6 +41,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_user_name->setText("");
     ui->label_time_left->setText("");
     ui->pushButton_logout->hide();
+
+
+    timerThread.start();
+    QObject::connect(&timerThread, &TimerThread::timeout, this, &MainWindow::onTimer);
+
+    // настраиваем стартовые окна
+    ui->stackedWidget_main->setCurrentIndex(PAGE_AUTH);
+    ui->stackedWidget_auth->setCurrentIndex(PAGE_CLIENT_AUTH);
 }
 
 MainWindow::~MainWindow()
@@ -85,6 +95,10 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
     ui->label_time_left->setText("");
     ui->pushButton_logout->show();
 
+    // зажаем время работы
+    timerTime = ALLOW_WORK_TIME*1000;    // 80 секунд
+    onTimer();      // обновляем время
+
     QMessageBox::information(this, "Авторизация", "Вы успешно авторизовались!");
 }
 
@@ -100,6 +114,42 @@ void MainWindow::on_pushButton_member_registration_sign_up_clicked()
     MembersAuthService memberAuthService;
     memberAuthService.registerUser(signUpModel);
 
+}
+
+// обновление таймера
+void MainWindow::onTimer()
+{
+    timerTime -= 1000;
+
+    if (timerTime < 0)
+    {
+        return;
+    }
+
+    int seconds = timerTime / 1000;
+    int minutes = seconds / 60;
+    seconds = seconds % 60;
+
+    QString timeLeftText = QString("%1:%2").arg(minutes, 2, 10, QChar('0')).arg(seconds, 2, 10, QChar('0'));
+    ui->label_time_left->setText(timeLeftText);
+
+    if(timerTime == 0)
+    {
+        on_pushButton_logout_clicked();
+        QMessageBox::information(this, "Время вышло", "Невозможно продолжить работу! Требуется кварцевание помещения!");
+    }
+    else if(minutes == 1 && seconds == 0)
+    {
+        QMessageBox::information(this, "Время", "Через 1 минуту потребуется кварцевание помещения! Завершите работу!");
+    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *closeEvent)
+{
+    timerThread.quit(); // отправляем сигнал завершения потока
+    timerThread.wait(); // ожидаем завершения потока
+
+    closeEvent->accept();
 }
 
 // кнопка проверки логина

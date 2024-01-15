@@ -21,7 +21,8 @@ SOURCES += \
     services/authservice.cpp \
     services/clientsauthservice.cpp \
     services/httpclient.cpp \
-    services/membersauthservice.cpp
+    services/membersauthservice.cpp \
+    timerthread.cpp
 
 HEADERS += \
     customstyles.h \
@@ -35,7 +36,8 @@ HEADERS += \
     services/authservice.h \
     services/clientsauthservice.h \
     services/httpclient.h \
-    services/membersauthservice.h
+    services/membersauthservice.h \
+    timerthread.h
 
 FORMS += \
     mainwindow.ui
