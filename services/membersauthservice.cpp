@@ -49,7 +49,7 @@ RegisterResult MembersAuthService::registerUser(SignUpModel signUpModel)
     // регистрация
     QUrl authUrl(HOST_URL + "/auth/signup");
     QJsonObject json;
-    json["fullName"] = signUpModel.getLogin();  //  TODO: Сделать ввод ФИО
+    json["fullName"] = signUpModel.getFullName();
     json["username"] = signUpModel.getLogin();
     json["password"] = signUpModel.getPassword();
 

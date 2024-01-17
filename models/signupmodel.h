@@ -7,7 +7,7 @@ class SignUpModel
 {
 
 public:
-    SignUpModel(const QString &login, const QString &password, const QString &passwordConfirm);
+    SignUpModel(const QString &login, const QString &password, const QString &passwordConfirm, const QString &fullName);
 
     const QString &getLogin() const;
     void setLogin(const QString &newLogin);

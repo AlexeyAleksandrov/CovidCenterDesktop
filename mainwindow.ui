@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>883</width>
-    <height>756</height>
+    <height>881</height>
    </rect>
   </property>
   <property name="font">
@@ -1199,14 +1199,18 @@ QPushButton::hover{
                 </widget>
                </item>
                <item row="5" column="0">
-                <widget class="QLabel" name="label_2">
+                <widget class="QLabel" name="label_member_registration_firstname">
                  <property name="text">
                   <string>Имя:</string>
                  </property>
                 </widget>
                </item>
                <item row="6" column="0">
-                <widget class="QLineEdit" name="lineEdit_2"/>
+                <widget class="QLineEdit" name="lineEdit_member_registration_firstname">
+                 <property name="placeholderText">
+                  <string>имя</string>
+                 </property>
+                </widget>
                </item>
                <item row="2" column="0">
                 <widget class="QLineEdit" name="lineEdit_member_registration_login">
@@ -1222,10 +1226,18 @@ QPushButton::hover{
                 </widget>
                </item>
                <item row="4" column="0">
-                <widget class="QLineEdit" name="lineEdit"/>
+                <widget class="QLineEdit" name="lineEdit_member_registration_lastname">
+                 <property name="placeholderText">
+                  <string>фамилия</string>
+                 </property>
+                </widget>
                </item>
                <item row="8" column="0">
-                <widget class="QLineEdit" name="lineEdit_3"/>
+                <widget class="QLineEdit" name="lineEdit_member_registration_patronymic">
+                 <property name="placeholderText">
+                  <string>отчество</string>
+                 </property>
+                </widget>
                </item>
                <item row="12" column="0">
                 <widget class="QLineEdit" name="lineEdit_member_registration_password_confirm">
@@ -1271,7 +1283,7 @@ QPushButton::hover{
                 </widget>
                </item>
                <item row="3" column="0">
-                <widget class="QLabel" name="label">
+                <widget class="QLabel" name="label_member_registration_lastname">
                  <property name="text">
                   <string>Фамилия:</string>
                  </property>
@@ -1294,7 +1306,7 @@ QPushButton::hover{
                 </widget>
                </item>
                <item row="7" column="0">
-                <widget class="QLabel" name="label_3">
+                <widget class="QLabel" name="label_member_registration_patronymic">
                  <property name="text">
                   <string>Отчество (при наличии):</string>
                  </property>
@@ -1560,7 +1572,7 @@ QPushButton::hover{
      <x>0</x>
      <y>0</y>
      <width>883</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

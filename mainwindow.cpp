@@ -125,14 +125,30 @@ void MainWindow::parseJwtToken(const QString& token) {
 // кнопка регистрации сотрудника
 void MainWindow::on_pushButton_member_registration_sign_up_clicked()
 {
+    // ФИО
+    QString firstName = ui->lineEdit_member_registration_firstname->text().trimmed();
+    QString lastName = ui->lineEdit_member_registration_lastname->text().trimmed();
+    QString patronymic = ui->lineEdit_member_registration_patronymic->text().trimmed();
+
+    if(firstName.size() < 2 || lastName.size() < 2 || (patronymic.size() < 2 && patronymic.size() > 0))
+    {
+        QMessageBox::warning(this, "Ошибка", "Введите корректные данные фамилии, имени и отчетсва!");
+        return;
+    }
+
+    // фамилия + имя + отчество
+    QString fullName = QString("%1 %2 %3").arg(lastName).arg(firstName).arg(patronymic).trimmed();   // формируем ФИО + очищаем пробелы по краям
+
     // форма регистрации
     SignUpModel signUpModel(ui->lineEdit_member_registration_login->text(),
                             ui->lineEdit_member_registration_password->text(),
-                            ui->lineEdit_member_registration_password_confirm->text());
+                            ui->lineEdit_member_registration_password_confirm->text(),
+                            fullName);
 
     // проверка формы
     MembersAuthService memberAuthService;
     memberAuthService.registerUser(signUpModel);
+
 
 }
 

@@ -1,10 +1,11 @@
 #include "signupmodel.h"
 
-SignUpModel::SignUpModel(const QString &login, const QString &password, const QString &passwordConfirm)
+SignUpModel::SignUpModel(const QString &login, const QString &password, const QString &passwordConfirm, const QString &fullName)
 {
     this->login = login;
     this->password = password;
     this->passwordConfirm = passwordConfirm;
+    this->fullName = fullName;
 }
 
 const QString &SignUpModel::getLogin() const
