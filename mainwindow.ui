@@ -405,7 +405,7 @@ border: 0px;</string>
         <item row="0" column="0">
          <widget class="QStackedWidget" name="stackedWidget_auth">
           <property name="currentIndex">
-           <number>3</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page_client_auth">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -1572,7 +1572,7 @@ QPushButton::hover{
      <x>0</x>
      <y>0</y>
      <width>883</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
@@ -1581,9 +1581,35 @@ QPushButton::hover{
  <tabstops>
   <tabstop>lineEdit_client_auth_login</tabstop>
   <tabstop>lineEdit_client_auth_password</tabstop>
-  <tabstop>pushButton_client_auth_sign_in</tabstop>
   <tabstop>pushButton_client_auth_forgot_password</tabstop>
+  <tabstop>pushButton_client_auth_sign_in</tabstop>
+  <tabstop>pushButton_client_auth_move_to_registation</tabstop>
+  <tabstop>pushButton_client_auth_move_to_auth_for_members</tabstop>
+  <tabstop>lineEdit_client_registration_login</tabstop>
+  <tabstop>lineEdit_client_registration_password</tabstop>
+  <tabstop>lineEdit_client_registration_password_confirm</tabstop>
+  <tabstop>pushButton_client_registration_sign_up</tabstop>
+  <tabstop>pushButton_client_registration_move_to_client_auth</tabstop>
+  <tabstop>lineEdit_member_auth_login</tabstop>
+  <tabstop>lineEdit_member_auth_password</tabstop>
+  <tabstop>pushButton_member_auth_forgot_password</tabstop>
+  <tabstop>pushButton_member_auth_sign_in</tabstop>
+  <tabstop>pushButton_member_auth_move_to_registration_for_members</tabstop>
+  <tabstop>pushButton_member_auth_move_to_auth_for_clients</tabstop>
+  <tabstop>lineEdit_member_registration_login</tabstop>
+  <tabstop>lineEdit_member_registration_lastname</tabstop>
+  <tabstop>lineEdit_member_registration_firstname</tabstop>
+  <tabstop>lineEdit_member_registration_patronymic</tabstop>
+  <tabstop>lineEdit_member_registration_password</tabstop>
+  <tabstop>lineEdit_member_registration_password_confirm</tabstop>
+  <tabstop>pushButton_member_registration_sign_up</tabstop>
+  <tabstop>pushButton_member_registration_move_to_auth_for_members</tabstop>
   <tabstop>pushButton_logout</tabstop>
+  <tabstop>tableWidget_memberOrdersList</tabstop>
+  <tabstop>pushButton_updateMemberOrdersList</tabstop>
+  <tabstop>pushButton</tabstop>
+  <tabstop>pushButton_3</tabstop>
+  <tabstop>pushButton_2</tabstop>
  </tabstops>
  <resources>
   <include location="sources.qrc"/>

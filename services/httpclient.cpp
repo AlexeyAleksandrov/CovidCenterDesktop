@@ -79,7 +79,15 @@ QString HttpClient::sentGetHttpRequest(QUrl url, QString token, QString &errorSt
     // Обрабатываем ответ
     if (reply->error() != QNetworkReply::NoError)
     {
-        errorString = reply->errorString();
+        if(reply->error() == QNetworkReply::ContentAccessDenied)
+        {
+            errorString = "Доступ запрещён!";
+        }
+        else
+        {
+            errorString = reply->errorString();
+        }
+
     }
 
     // Освобождаем ресурсы

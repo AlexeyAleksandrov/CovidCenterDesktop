@@ -93,7 +93,6 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
 
     // если авторизация успешна
     jwtToken = authResult.getJwtToken();  // сохраняем токен
-//    ui->lineEdit_jwtToken->setText(jwtToken->getToken());  // выводим токен
     ui->stackedWidget_main->setCurrentIndex(PAGE_MEMBER);   // переключаемся на страницу пользователя
 
     ui->label_user_name->setText(signInModel.getLogin());
@@ -104,11 +103,7 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
     timerTime = ALLOW_WORK_TIME*1000;    // 80 секунд
     onTimer();      // обновляем время
 
-//    QMessageBox::information(this, "Авторизация", "Вы успешно авторизовались!");
-
-//    parseJwtToken(jwtToken->getToken());
-
-    on_pushButton_updateMemberOrdersList_clicked(); // обнавляем список заказов
+//    on_pushButton_updateMemberOrdersList_clicked(); // обнавляем список заказов
 }
 
 void MainWindow::parseJwtToken(const QString& token) {
@@ -147,9 +142,15 @@ void MainWindow::on_pushButton_member_registration_sign_up_clicked()
 
     // проверка формы
     MembersAuthService memberAuthService;
-    memberAuthService.registerUser(signUpModel);
+    RegisterResult registerResult = memberAuthService.registerUser(signUpModel);
 
+    if(registerResult.getStatus() != RegisterResultStatus::SUCCESSFULL)
+    {
+        QMessageBox::warning(this, "Ошибка регистрации", registerResult.getErrorText());    // вывод информации об ошибке
+        return;
+    }
 
+    QMessageBox::information(this, "Регистрация", "Вы успешно зарегистрировались!");
 }
 
 // обновление таймера
@@ -212,10 +213,6 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
         QMessageBox::warning(this, "Ошибка", errorText);
         return;
     }
-
-//    qDebug() << result;
-
-//    ui->lineEdit->setText(result);
 
     QJsonArray jsonArray = QJsonDocument::fromJson(result.toUtf8()).array();
 
