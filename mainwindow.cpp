@@ -45,6 +45,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_time_left->setText("");
     ui->pushButton_logout->hide();
 
+    ui->tableWidget_memberOrdersList->setRowCount(0);
 
     timerThread.start();
     QObject::connect(&timerThread, &TimerThread::timeout, this, &MainWindow::onTimer);
@@ -106,6 +107,8 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
 //    QMessageBox::information(this, "Авторизация", "Вы успешно авторизовались!");
 
 //    parseJwtToken(jwtToken->getToken());
+
+    on_pushButton_updateMemberOrdersList_clicked(); // обнавляем список заказов
 }
 
 void MainWindow::parseJwtToken(const QString& token) {
@@ -196,7 +199,7 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
 
 //    qDebug() << result;
 
-    ui->lineEdit->setText(result);
+//    ui->lineEdit->setText(result);
 
     QJsonArray jsonArray = QJsonDocument::fromJson(result.toUtf8()).array();
 
@@ -207,6 +210,7 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
         QJsonObject obj = value.toObject();
         Order order;
         order.setUserId(obj["userId"].toInt());
+        order.setUserFullName(obj["userFullName"].toString());
         order.setOrderId(obj["orderId"].toInt());
         order.setOrderStatus(Order::OrderStatus(obj["orderStatus"].toInt()));
 
@@ -248,7 +252,7 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
         Order order = ordersList.at(i);
 
         orderIdItem->setText(QString::number(order.getOrderId()));
-        userNameItem->setText(QString::number(order.getUserId()));
+        userNameItem->setText(order.getUserFullName());
         orderStatusItem->setText(Order::getNameOfOrderStatus(order.getOrderStatus()));
 
 //        qDebug() << "User ID: " << order.getUserId();
@@ -257,6 +261,6 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
 //        qDebug() << "Order Status: " << (int)order.getOrderStatus();
     }
 
-    QMessageBox::information(this, "Список заказов", "Список заказов: " + result);
+//    QMessageBox::information(this, "Список заказов", "Список заказов: " + result);
 }
 

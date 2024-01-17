@@ -74,3 +74,13 @@ QString Order::getNameOfOrderStatus(OrderStatus orderStatus)
     }
 }
 
+const QString &Order::getUserFullName() const
+{
+    return userFullName;
+}
+
+void Order::setUserFullName(const QString &newUserFullName)
+{
+    userFullName = newUserFullName;
+}
+
