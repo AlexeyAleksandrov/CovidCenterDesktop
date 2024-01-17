@@ -34,6 +34,8 @@ private slots:
     void onTimer();
     void closeEvent(QCloseEvent *closeEvent);
 
+    void on_pushButton_updateMemberOrdersList_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -42,5 +44,7 @@ private:
 //    QTimer timer;   // таймер для автоматического выхода
     TimerThread timerThread;
     int timerTime = -1; // текущее время таймера
+
+    QString authToken;  // JWT токен
 };
 #endif // MAINWINDOW_H

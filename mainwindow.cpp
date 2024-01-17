@@ -88,7 +88,8 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
     }
 
     // если авторизация успешна
-    ui->lineEdit_jwtToken->setText(authResult.getToken());  // выводим токен
+    authToken = authResult.getToken();  // сохраняем токен
+    ui->lineEdit_jwtToken->setText(authToken);  // выводим токен
     ui->stackedWidget_main->setCurrentIndex(PAGE_MEMBER);   // переключаемся на страницу пользователя
 
     ui->label_user_name->setText(signInModel.getLogin());
@@ -179,4 +180,21 @@ void MainWindow::on_pushButton_logout_clicked()
     ui->pushButton_logout->hide();
 }
 
+
+// обновление списка заказов
+void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
+{
+    QUrl url("http://localhost:8080/api/v1/orders/");     // адрес
+
+    QString errorText;
+    QString result = HttpClient::sentGetHttpRequest(url, authToken, errorText);     // выполняем get-запрос
+
+    if(!errorText.isEmpty())    // если есть ошибка
+    {
+        QMessageBox::warning(this, "Ошибка", errorText);
+        return;
+    }
+
+    QMessageBox::information(this, "Логин", "Список заказов: " + result);
+}
 
