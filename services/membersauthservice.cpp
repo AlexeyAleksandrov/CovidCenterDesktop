@@ -13,7 +13,7 @@ AuthResult MembersAuthService::authUser(SignInModel signInModel)
     AuthResultStatus resultStatus = AuthService::checkAuthForm(signInModel);
     if(resultStatus != AuthResultStatus::FORM_VALID_SUCCESSFULL)
     {
-        return AuthResult(resultStatus);
+        return AuthResult(resultStatus, nullptr);
     }
 
     // авторизация
@@ -27,12 +27,12 @@ AuthResult MembersAuthService::authUser(SignInModel signInModel)
 
     if(!errorText.isEmpty())    // если есть ошибка
     {
-        return AuthResult(AuthResultStatus::FAILED);
+        return AuthResult(AuthResultStatus::FAILED, nullptr);
     }
 
     // формируем результат авторизации
-    AuthResult authResult(AuthResultStatus::SUCCESSFULL);
-    authResult.setToken(token);
+    JwtToken *jwt = new JwtToken(token);
+    AuthResult authResult(AuthResultStatus::SUCCESSFULL, jwt);
 
     return authResult;
 }

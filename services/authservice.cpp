@@ -6,7 +6,7 @@
 AuthResult AuthService::authUser(SignInModel signInModel)
 {
     Q_UNUSED(signInModel);
-    return AuthResult(AuthResultStatus::NOT_AUTH);
+    return AuthResult(AuthResultStatus::NOT_AUTH, nullptr);
 }
 
 // виртуальный метод регистрации пользователя

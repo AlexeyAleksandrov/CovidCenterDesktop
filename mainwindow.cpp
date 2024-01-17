@@ -1,16 +1,19 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
+#include <models/order.h>
 #include <models/signinmodel.h>
 
 #include <services/httpclient.h>
 #include <services/membersauthservice.h>
 
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
 #include <QUrl>
 
-#define ALLOW_WORK_TIME 10   // в секундах
+#define ALLOW_WORK_TIME 10*60   // в секундах // 10 минут
 
 #define PAGE_AUTH 0
 #define PAGE_MEMBER 1
@@ -88,8 +91,8 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
     }
 
     // если авторизация успешна
-    authToken = authResult.getToken();  // сохраняем токен
-    ui->lineEdit_jwtToken->setText(authToken);  // выводим токен
+    jwtToken = authResult.getJwtToken();  // сохраняем токен
+//    ui->lineEdit_jwtToken->setText(jwtToken->getToken());  // выводим токен
     ui->stackedWidget_main->setCurrentIndex(PAGE_MEMBER);   // переключаемся на страницу пользователя
 
     ui->label_user_name->setText(signInModel.getLogin());
@@ -100,7 +103,20 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
     timerTime = ALLOW_WORK_TIME*1000;    // 80 секунд
     onTimer();      // обновляем время
 
-    QMessageBox::information(this, "Авторизация", "Вы успешно авторизовались!");
+//    QMessageBox::information(this, "Авторизация", "Вы успешно авторизовались!");
+
+//    parseJwtToken(jwtToken->getToken());
+}
+
+void MainWindow::parseJwtToken(const QString& token) {
+    QStringList parts = token.split('.');
+    QByteArray payloadData = QByteArray::fromBase64(parts[1].toUtf8());
+    QJsonDocument payloadDoc = QJsonDocument::fromJson(payloadData);
+    QJsonObject payload = payloadDoc.object();
+
+    qDebug() << "Subject: " << payload["sub"].toString();
+    qDebug() << "Issued At: " << QDateTime::fromSecsSinceEpoch(payload["iat"].toInt()).toString("dd.MM.yyyy hh:mm");
+    qDebug() << "Expiration: " << QDateTime::fromSecsSinceEpoch(payload["exp"].toInt()).toLocalTime().toString("dd.MM.yyyy hh:mm");
 }
 
 // кнопка регистрации сотрудника
@@ -145,30 +161,13 @@ void MainWindow::onTimer()
     }
 }
 
+// обработчик закрытия программы
 void MainWindow::closeEvent(QCloseEvent *closeEvent)
 {
     timerThread.quit(); // отправляем сигнал завершения потока
     timerThread.wait(); // ожидаем завершения потока
 
     closeEvent->accept();
-}
-
-// кнопка проверки логина
-void MainWindow::on_pushButton_checkLogin_clicked()
-{
-    QString token = ui->lineEdit_jwtToken->text();  // получаем токен
-    QUrl url("http://localhost:8080/secured/user");     // адрес
-
-    QString errorText;
-    QString result = HttpClient::sentGetHttpRequest(url, token, errorText);     // выполняем get-запрос
-
-    if(!errorText.isEmpty())    // если есть ошибка
-    {
-        QMessageBox::warning(this, "Ошибка", errorText);
-        return;
-    }
-
-    QMessageBox::information(this, "Логин", "Ваш логин: " + result);
 }
 
 // кнопка выхода для сотрудника
@@ -187,7 +186,7 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
     QUrl url("http://localhost:8080/api/v1/orders/");     // адрес
 
     QString errorText;
-    QString result = HttpClient::sentGetHttpRequest(url, authToken, errorText);     // выполняем get-запрос
+    QString result = HttpClient::sentGetHttpRequest(url, jwtToken->getToken(), errorText);     // выполняем get-запрос
 
     if(!errorText.isEmpty())    // если есть ошибка
     {
@@ -195,6 +194,69 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
         return;
     }
 
-    QMessageBox::information(this, "Логин", "Список заказов: " + result);
+//    qDebug() << result;
+
+    ui->lineEdit->setText(result);
+
+    QJsonArray jsonArray = QJsonDocument::fromJson(result.toUtf8()).array();
+
+    QList<Order> ordersList;
+
+    for (const QJsonValue &value : qAsConst(jsonArray))
+    {
+        QJsonObject obj = value.toObject();
+        Order order;
+        order.setUserId(obj["userId"].toInt());
+        order.setOrderId(obj["orderId"].toInt());
+        order.setOrderStatus(Order::OrderStatus(obj["orderStatus"].toInt()));
+
+        QJsonArray servicesArray = obj["services"].toArray();
+        QList<long> services;
+        for (const QJsonValue &serv : qAsConst(servicesArray))
+        {
+            services.append(serv.toInt());
+        }
+        order.setServices(services);
+
+        ordersList.append(order);
+    }
+
+    ui->tableWidget_memberOrdersList->setRowCount(ordersList.size());
+
+    for (int i=0; i<ordersList.size(); i++) {
+
+        QTableWidgetItem *orderIdItem = ui->tableWidget_memberOrdersList->item(i, 0);
+        QTableWidgetItem *userNameItem = ui->tableWidget_memberOrdersList->item(i, 1);
+        QTableWidgetItem *orderStatusItem = ui->tableWidget_memberOrdersList->item(i, 2);
+
+        if(orderIdItem == nullptr)
+        {
+            orderIdItem = new QTableWidgetItem();
+            ui->tableWidget_memberOrdersList->setItem(i, 0, orderIdItem);
+        }
+        if(userNameItem == nullptr)
+        {
+            userNameItem = new QTableWidgetItem();
+            ui->tableWidget_memberOrdersList->setItem(i, 1, userNameItem);
+        }
+        if(orderStatusItem == nullptr)
+        {
+            orderStatusItem = new QTableWidgetItem();
+            ui->tableWidget_memberOrdersList->setItem(i, 2, orderStatusItem);
+        }
+
+        Order order = ordersList.at(i);
+
+        orderIdItem->setText(QString::number(order.getOrderId()));
+        userNameItem->setText(QString::number(order.getUserId()));
+        orderStatusItem->setText(Order::getNameOfOrderStatus(order.getOrderStatus()));
+
+//        qDebug() << "User ID: " << order.getUserId();
+//        qDebug() << "Order ID: " << order.getOrderId();
+//        qDebug() << "Services: " << order.getServices();
+//        qDebug() << "Order Status: " << (int)order.getOrderStatus();
+    }
+
+    QMessageBox::information(this, "Список заказов", "Список заказов: " + result);
 }
 

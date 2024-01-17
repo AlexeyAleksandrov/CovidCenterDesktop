@@ -7,6 +7,8 @@
 #include <QTimer>
 #include <QCloseEvent>
 
+#include <models/jwttoken.h>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -24,7 +26,7 @@ private slots:
 
     void on_pushButton_member_auth_sign_in_clicked();
 
-    void on_pushButton_checkLogin_clicked();
+//    void on_pushButton_checkLogin_clicked();
 
     void on_pushButton_logout_clicked();
 
@@ -40,11 +42,12 @@ private:
     Ui::MainWindow *ui;
 
     void clearFocus();
+    void parseJwtToken(const QString &token);
 
 //    QTimer timer;   // таймер для автоматического выхода
     TimerThread timerThread;
     int timerTime = -1; // текущее время таймера
 
-    QString authToken;  // JWT токен
+    JwtToken *jwtToken = nullptr;  // JWT токен
 };
 #endif // MAINWINDOW_H

@@ -1,6 +1,6 @@
 #include "authresult.h"
 
-AuthResult::AuthResult(AuthResultStatus status)
+AuthResult::AuthResult(AuthResultStatus status, JwtToken *jwtToken)
 {
     this->status = status;
 
@@ -11,6 +11,8 @@ AuthResult::AuthResult(AuthResultStatus status)
     errorsText.insert(AuthResultStatus::INCORRECT_LOGIN,        "Некорректный логин");
     errorsText.insert(AuthResultStatus::INCORRECT_PASSWORD,     "Некорректный пароль");
     errorsText.insert(AuthResultStatus::BANNED,                 "Пользователь забанен");
+
+    this->jwtToken = jwtToken;
 }
 
 AuthResultStatus AuthResult::getStatus() const
@@ -29,12 +31,11 @@ QString AuthResult::getErrorText()
     return errorsText[status];
 }
 
-const QString &AuthResult::getToken() const
+JwtToken *AuthResult::getJwtToken() const
 {
-    return token;
+    return jwtToken;
 }
 
-void AuthResult::setToken(const QString &newToken)
-{
-    token = newToken;
-}
+
+
+

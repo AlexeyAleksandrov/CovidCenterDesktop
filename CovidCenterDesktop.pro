@@ -14,6 +14,8 @@ SOURCES += \
     mainwindow.cpp \
     models/authresult.cpp \
     models/authresultstatus.cpp \
+    models/jwttoken.cpp \
+    models/order.cpp \
     models/registerresult.cpp \
     models/registerresultstatus.cpp \
     models/signinmodel.cpp \
@@ -29,6 +31,8 @@ HEADERS += \
     mainwindow.h \
     models/authresult.h \
     models/authresultstatus.h \
+    models/jwttoken.h \
+    models/order.h \
     models/registerresult.h \
     models/registerresultstatus.h \
     models/signinmodel.h \
