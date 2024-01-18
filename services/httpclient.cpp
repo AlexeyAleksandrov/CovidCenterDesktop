@@ -53,7 +53,47 @@ QString HttpClient::sendPostRequest(QUrl url, QJsonObject json, QString token, Q
     return QString::fromUtf8(response);
 }
 
-QString HttpClient::sentGetHttpRequest(QUrl url, QString token, QString &errorString)
+QString HttpClient::sendDeleteRequest(QUrl url, QString token, QString &errorString)
+{
+    QNetworkAccessManager manager;
+    QNetworkRequest request;
+
+    errorString = "";   // пустая строка, ошибок нет
+
+    // Устанавливаем URL для запроса
+    request.setUrl(url);
+
+    // Устанавливаем заголовок Authorization
+    QString authorizationHeader = "Bearer " + token;
+    request.setRawHeader("Authorization", authorizationHeader.toUtf8());
+
+    // Устанавливаем заголовок Content-Type
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+
+    // Выполняем POST запрос
+    QNetworkReply *reply = manager.deleteResource(request);
+
+    // Ожидаем, пока запрос завершится
+    QEventLoop loop;
+    QObject::connect(reply, SIGNAL(finished()), &loop, SLOT(quit()));
+    loop.exec();
+
+    // Читаем ответ
+    QByteArray response = reply->readAll();
+
+    // Обрабатываем ответ
+    if (reply->error() != QNetworkReply::NoError)
+    {
+        errorString = reply->errorString();
+    }
+
+    // Освобождаем ресурсы
+    reply->deleteLater();
+
+    return QString::fromUtf8(response);
+}
+
+QString HttpClient::sendGetHttpRequest(QUrl url, QString token, QString &errorString)
 {
     QNetworkAccessManager manager;
     QNetworkRequest request;

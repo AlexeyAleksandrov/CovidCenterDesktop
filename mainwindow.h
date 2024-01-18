@@ -45,6 +45,8 @@ private slots:
 
     void on_tableWidget_memberOrdersList_itemClicked(QTableWidgetItem *item);
 
+    void on_pushButton_member_deleteOrder_clicked();
+
 private:
     Ui::MainWindow *ui;
 

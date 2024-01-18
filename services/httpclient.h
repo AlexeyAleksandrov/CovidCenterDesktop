@@ -12,8 +12,9 @@ class HttpClient : public QObject
 public:
     explicit HttpClient(QObject *parent = nullptr);
 
+    static QString sendGetHttpRequest(QUrl url, QString token, QString &errorString);
     static QString sendPostRequest(QUrl url, QJsonObject json, QString token, QString &errorString);
-    static QString sentGetHttpRequest(QUrl url, QString token, QString &errorString);
+    static QString sendDeleteRequest(QUrl url, QString token, QString &errorString);
 
 signals:
 

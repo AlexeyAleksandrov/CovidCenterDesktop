@@ -209,7 +209,7 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
     QUrl url("http://localhost:8080/api/v1/orders/");     // адрес
 
     QString errorText;
-    QString result = HttpClient::sentGetHttpRequest(url, jwtToken->getToken(), errorText);     // выполняем get-запрос
+    QString result = HttpClient::sendGetHttpRequest(url, jwtToken->getToken(), errorText);     // выполняем get-запрос
 
     if(!errorText.isEmpty())    // если есть ошибка
     {
@@ -289,7 +289,7 @@ void MainWindow::on_pushButton_member_showOrder_clicked()
     QUrl url(QString("http://localhost:8080/api/v1/orders/%1").arg(orderId));     // адрес
 
     QString errorText;
-    QString result = HttpClient::sentGetHttpRequest(url, jwtToken->getToken(), errorText);     // выполняем get-запрос
+    QString result = HttpClient::sendGetHttpRequest(url, jwtToken->getToken(), errorText);     // выполняем get-запрос
 
     if(!errorText.isEmpty())    // если есть ошибка
     {
@@ -308,9 +308,10 @@ void MainWindow::on_pushButton_member_showOrder_clicked()
     QString createDate = jsonObject.value("createDate").toString();
     QString status = jsonObject.value("status").toString();
 
-    qDebug() << "ID:" << id;
-    qDebug() << "CreateDate:" << createDate;
-    qDebug() << "Status:" << status;
+    Q_UNUSED(id);
+//    qDebug() << "ID:" << id;
+//    qDebug() << "CreateDate:" << createDate;
+//    qDebug() << "Status:" << status;
 
     // Извлечение массива "services"
     QJsonArray servicesArray = jsonObject.value("services").toArray();
@@ -324,18 +325,18 @@ void MainWindow::on_pushButton_member_showOrder_clicked()
 
         services.append(serviceData);
 
-        qDebug() << "  Service ID:" << serviceData.id;
-        qDebug() << "  Service Name:" << serviceData.service.serviceName;
-        qDebug() << "  Price:" << serviceData.service.price;
-        qDebug() << "  Analyzer Status:" << serviceData.analyzerResult.status;
+//        qDebug() << "  Service ID:" << serviceData.id;
+//        qDebug() << "  Service Name:" << serviceData.service.serviceName;
+//        qDebug() << "  Price:" << serviceData.service.price;
+//        qDebug() << "  Analyzer Status:" << serviceData.analyzerResult.status;
     }
 
     // Извлечение объекта "user"
     User user;
     user.fromJson(jsonObject.value("user").toObject());
-    qDebug() << "User:";
-    qDebug() << "  User ID:" << user.id;
-    qDebug() << "  Full Name:" << user.fullName;
+//    qDebug() << "User:";
+//    qDebug() << "  User ID:" << user.id;
+//    qDebug() << "  Full Name:" << user.fullName;
 
     ui->groupBox_member_showOrder->setTitle(QString("Заказ №%1").arg(orderId));
     ui->lineEdit_member_showOrder_orderId->setText(QString("Заказ №%1").arg(orderId));
@@ -369,4 +370,37 @@ void MainWindow::on_tableWidget_memberOrdersList_itemClicked(QTableWidgetItem *i
     {
         ui->tableWidget_memberOrdersList->item(item->row(), j)->setSelected(true);
     }
+}
+
+// удаление заказа
+void MainWindow::on_pushButton_member_deleteOrder_clicked()
+{
+    QList<QTableWidgetItem*> selectedItems = ui->tableWidget_memberOrdersList->selectedItems();
+    if(selectedItems.isEmpty())
+    {
+        QMessageBox::warning(this, "Ошибка", "Выберите заказ для удаления!");
+        return;
+    }
+
+    int row = selectedItems.first()->row();
+    int orderId = ui->tableWidget_memberOrdersList->item(row, 0)->text().toInt();
+
+    auto answer = QMessageBox::information(this, "Удаление заказа", QString("Удалить заказ %1").arg(orderId), QMessageBox::No|QMessageBox::Yes);
+    if(answer != QMessageBox::Yes)
+    {
+        return;
+    }
+
+    QUrl url(QString("http://localhost:8080/api/v1/orders/%1").arg(orderId));     // адрес
+
+    QString errorText;
+    QString result = HttpClient::sendDeleteRequest(url, jwtToken->getToken(), errorText);     // выполняем get-запрос
+
+    if(!errorText.isEmpty())    // если есть ошибка
+    {
+        QMessageBox::warning(this, "Ошибка", errorText);
+        return;
+    }
+
+    ui->tableWidget_memberOrdersList->removeRow(row);
 }
