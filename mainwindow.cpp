@@ -103,7 +103,7 @@ void MainWindow::on_pushButton_member_auth_sign_in_clicked()
     ui->pushButton_logout->show();
 
     // зажаем время работы
-    timerTime = ALLOW_WORK_TIME*1000;    // 80 секунд
+    timerTime = jwtToken->getLifeTime() * 1000;    // время работы
     onTimer();      // обновляем время
 
 //    on_pushButton_updateMemberOrdersList_clicked(); // обнавляем список заказов
@@ -154,6 +154,10 @@ void MainWindow::on_pushButton_member_registration_sign_up_clicked()
     }
 
     QMessageBox::information(this, "Регистрация", "Вы успешно зарегистрировались!");
+
+    ui->stackedWidget_auth->setCurrentIndex(PAGE_MEMBER_AUTH);
+    ui->lineEdit_member_auth_login->setText(ui->lineEdit_member_registration_login->text());
+    ui->lineEdit_member_auth_password->setText("");
 }
 
 // обновление таймера
@@ -196,6 +200,7 @@ void MainWindow::closeEvent(QCloseEvent *closeEvent)
 // кнопка выхода для сотрудника
 void MainWindow::on_pushButton_logout_clicked()
 {
+    timerTime = -1;
     ui->stackedWidget_main->setCurrentIndex(PAGE_AUTH);   // переключаемся на страницу пользователя
     ui->label_user_name->setText("");
     ui->label_time_left->setText("");
