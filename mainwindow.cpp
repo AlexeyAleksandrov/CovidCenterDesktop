@@ -2,7 +2,9 @@
 #include "./ui_mainwindow.h"
 
 #include <models/order.h>
+#include <models/servicedata.h>
 #include <models/signinmodel.h>
+#include <models/user.h>
 
 #include <services/httpclient.h>
 #include <services/membersauthservice.h>
@@ -17,6 +19,7 @@
 
 #define PAGE_AUTH 0
 #define PAGE_MEMBER 1
+#define PAGE_MEMBER_SHOW_ORDER 2
 
 #define PAGE_CLIENT_AUTH 0
 #define PAGE_CLIENT_REGISTRATION 1
@@ -52,7 +55,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // настраиваем стартовые окна
     ui->stackedWidget_main->setCurrentIndex(PAGE_AUTH);
-    ui->stackedWidget_auth->setCurrentIndex(PAGE_CLIENT_AUTH);
+    ui->stackedWidget_auth->setCurrentIndex(PAGE_MEMBER_AUTH);
 }
 
 MainWindow::~MainWindow()
@@ -267,13 +270,103 @@ void MainWindow::on_pushButton_updateMemberOrdersList_clicked()
         orderIdItem->setText(QString::number(order.getOrderId()));
         userNameItem->setText(order.getUserFullName());
         orderStatusItem->setText(Order::getNameOfOrderStatus(order.getOrderStatus()));
-
-//        qDebug() << "User ID: " << order.getUserId();
-//        qDebug() << "Order ID: " << order.getOrderId();
-//        qDebug() << "Services: " << order.getServices();
-//        qDebug() << "Order Status: " << (int)order.getOrderStatus();
     }
-
-//    QMessageBox::information(this, "Список заказов", "Список заказов: " + result);
 }
 
+// просмотр заказа
+void MainWindow::on_pushButton_member_showOrder_clicked()
+{
+    QList<QTableWidgetItem*> selectedItems = ui->tableWidget_memberOrdersList->selectedItems();
+    if(selectedItems.isEmpty())
+    {
+        QMessageBox::warning(this, "Ошибка", "Выберите заказ для просмотра!");
+        return;
+    }
+
+    int row = selectedItems.first()->row();
+    int orderId = ui->tableWidget_memberOrdersList->item(row, 0)->text().toInt();
+
+    QUrl url(QString("http://localhost:8080/api/v1/orders/%1").arg(orderId));     // адрес
+
+    QString errorText;
+    QString result = HttpClient::sentGetHttpRequest(url, jwtToken->getToken(), errorText);     // выполняем get-запрос
+
+    if(!errorText.isEmpty())    // если есть ошибка
+    {
+        QMessageBox::warning(this, "Ошибка", errorText);
+        return;
+    }
+
+    // Преобразование JSON-строки в QJsonDocument
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(result.toUtf8());
+
+    // Получение основного объекта JSON
+    QJsonObject jsonObject = jsonDocument.object();
+
+    // Извлечение данных из объекта JSON
+    int id = jsonObject.value("id").toInt();
+    QString createDate = jsonObject.value("createDate").toString();
+    QString status = jsonObject.value("status").toString();
+
+    qDebug() << "ID:" << id;
+    qDebug() << "CreateDate:" << createDate;
+    qDebug() << "Status:" << status;
+
+    // Извлечение массива "services"
+    QJsonArray servicesArray = jsonObject.value("services").toArray();
+    qDebug() << "Services:";
+
+    QList<ServiceData> services;
+    for (QJsonValue serviceValue : servicesArray)
+    {
+        ServiceData serviceData;
+        serviceData.fromJson(serviceValue.toObject());
+
+        services.append(serviceData);
+
+        qDebug() << "  Service ID:" << serviceData.id;
+        qDebug() << "  Service Name:" << serviceData.service.serviceName;
+        qDebug() << "  Price:" << serviceData.service.price;
+        qDebug() << "  Analyzer Status:" << serviceData.analyzerResult.status;
+    }
+
+    // Извлечение объекта "user"
+    User user;
+    user.fromJson(jsonObject.value("user").toObject());
+    qDebug() << "User:";
+    qDebug() << "  User ID:" << user.id;
+    qDebug() << "  Full Name:" << user.fullName;
+
+    ui->groupBox_member_showOrder->setTitle(QString("Заказ №%1").arg(orderId));
+    ui->lineEdit_member_showOrder_orderId->setText(QString("Заказ №%1").arg(orderId));
+    ui->lineEdit_member_showOrder_fio->setText(user.fullName);
+    ui->lineEdit_member_showOrder_status->setText(status);
+
+    ui->tableWidget_member_showOrder_services->setRowCount(services.size());
+
+    for (int i=0; i<services.size(); i++)
+    {
+        ui->tableWidget_member_showOrder_services->setItem(i, 0, new QTableWidgetItem(services.at(i).service.serviceName));
+        ui->tableWidget_member_showOrder_services->setItem(i, 1, new QTableWidgetItem(QString::number(services.at(i).service.price)));
+        ui->tableWidget_member_showOrder_services->setItem(i, 2, new QTableWidgetItem(services.at(i).analyzerResult.status));
+    }
+
+    ui->stackedWidget_main->setCurrentIndex(PAGE_MEMBER_SHOW_ORDER);
+    clearFocus();
+}
+
+// возврат на главный экран
+void MainWindow::on_pushButton_member_showOrder_return_clicked()
+{
+    ui->stackedWidget_main->setCurrentIndex(PAGE_MEMBER);
+    clearFocus();
+}
+
+// делаем выделение всей строки
+void MainWindow::on_tableWidget_memberOrdersList_itemClicked(QTableWidgetItem *item)
+{
+    for (int j=0; j<ui->tableWidget_memberOrdersList->columnCount(); j++)
+    {
+        ui->tableWidget_memberOrdersList->item(item->row(), j)->setSelected(true);
+    }
+}

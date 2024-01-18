@@ -24,7 +24,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">MainWindow{
-background:rgb(255, 255, 255);
+	background:rgb(255, 255, 255);
 	color: rgb(0, 0, 0);
 }
 
@@ -142,59 +142,26 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
 	background: none;
 }
 
-
 QComboBox{
-color:rgb(235, 235, 235);
+color:rgb(118, 227, 131);
+font: 16pt &quot;Comic Sans MS&quot;;
 border-radius:5px;
-background:rgb(60, 60, 60)
+background:rgb(255, 255, 255);
+	border-color: rgb(118, 227, 111);
 }
 
-QComboBox:editable{
-color:rgb(235, 235, 235);
-border-radius:5px;
-background:rgb(60, 60, 60)
+QComboBox QAbstractItemView
+{
+    color:rgb(73, 140,81);
+	font: 16pt &quot;Comic Sans MS&quot;;
+	border-radius:5px;
+	background:rgb(255, 255, 255);
+	border-color: rgb(118, 227, 111);
 }
 
-QComboBox::drop-down{
-color:rgb(235, 235, 235);
-border-radius:5px;
-background-color: rgb(50, 50,100);
-}
-
-QComboBox::down-arrow{
-color:rgb(235, 235, 235);
-border-radius:5px;
-background-color: rgb(50, 50,100)
-}
-
-QComboBox QAbstractItemView{
-color:rgb(235, 235, 235);
-border-radius:5px;
-background:rgb(60, 60, 60)
-}
-
-QComboBox{
-color:rgb(235, 235, 235);
-border-radius:5px;
-background:rgb(60, 60, 60)
-}
-
-QComboBox:editable{
-color:rgb(235, 235, 235);
-border-radius:5px;
-background:rgb(60, 60, 60)
-}
-
-QComboBox::drop-down{
-color:rgb(235, 235, 235);
-border-radius:5px;
-background-color: rgb(50, 50,100)
-}
-
-QComboBox::down-arrow{
-color:rgb(235, 235, 235);
-border-radius:5px;
-background-color: rgb(50, 50,100)
+QComboBox::drop-down
+{
+	background:rgb(118, 227, 131);
 }
 
 QTableWidget{
@@ -211,7 +178,12 @@ QHeaderView::section {
     border: 1px solid #6c6c6c;
 }
 
-
+QListView {
+	background:rgb(255, 255, 255);
+	border-radius:5px;
+	color: rgb(118, 227, 131);
+	font: 13pt &quot;Comic Sans MS&quot;;
+}
 </string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -398,14 +370,14 @@ border: 0px;</string>
     <item row="2" column="1">
      <widget class="QStackedWidget" name="stackedWidget_main">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="page_auth">
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="0" column="0">
          <widget class="QStackedWidget" name="stackedWidget_auth">
           <property name="currentIndex">
-           <number>2</number>
+           <number>3</number>
           </property>
           <widget class="QWidget" name="page_client_auth">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -1389,6 +1361,9 @@ QPushButton::hover{
              <property name="horizontalScrollBarPolicy">
               <enum>Qt::ScrollBarAlwaysOff</enum>
              </property>
+             <property name="editTriggers">
+              <set>QAbstractItemView::SelectedClicked</set>
+             </property>
              <property name="showGrid">
               <bool>true</bool>
              </property>
@@ -1498,14 +1473,20 @@ QPushButton::hover{
             </spacer>
            </item>
            <item row="2" column="0">
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="pushButton_member_showOrder">
+             <property name="minimumSize">
+              <size>
+               <width>110</width>
+               <height>0</height>
+              </size>
+             </property>
              <property name="text">
               <string>Просмотр</string>
              </property>
             </widget>
            </item>
            <item row="4" column="0">
-            <widget class="QPushButton" name="pushButton_3">
+            <widget class="QPushButton" name="pushButton_member_deleteOrder">
              <property name="text">
               <string>Удалить</string>
              </property>
@@ -1525,10 +1506,139 @@ QPushButton::hover{
             </spacer>
            </item>
            <item row="3" column="0">
-            <widget class="QPushButton" name="pushButton_2">
+            <widget class="QPushButton" name="pushButton_member_editOrder">
              <property name="text">
               <string>Изменить</string>
              </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QPushButton" name="pushButton_member_createOrder">
+             <property name="text">
+              <string>Создать</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="page">
+       <layout class="QGridLayout" name="gridLayout_15">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_member_showOrder">
+          <property name="title">
+           <string>Заказ №0000</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_16">
+           <item row="9" column="0">
+            <spacer name="horizontalSpacer_17">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label">
+             <property name="text">
+              <string>Номер заказа:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0" colspan="2">
+            <widget class="QLineEdit" name="lineEdit_member_showOrder_status">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0" colspan="2">
+            <widget class="QLabel" name="label_3">
+             <property name="text">
+              <string>Статус:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="2">
+            <widget class="QLineEdit" name="lineEdit_member_showOrder_orderId">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="2">
+            <widget class="QLineEdit" name="lineEdit_member_showOrder_fio">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QPushButton" name="pushButton_member_showOrder_return">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Назад</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0" colspan="2">
+            <widget class="QLabel" name="label_4">
+             <property name="text">
+              <string>Состав заказа:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="2">
+            <widget class="QLabel" name="label_2">
+             <property name="text">
+              <string>ФИО заказчика:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0" colspan="2">
+            <widget class="QTableWidget" name="tableWidget_member_showOrder_services">
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::AdjustToContents</enum>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>240</number>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>Название</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Цена</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Статус</string>
+              </property>
+             </column>
             </widget>
            </item>
           </layout>
@@ -1607,9 +1717,9 @@ QPushButton::hover{
   <tabstop>pushButton_logout</tabstop>
   <tabstop>tableWidget_memberOrdersList</tabstop>
   <tabstop>pushButton_updateMemberOrdersList</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>pushButton_3</tabstop>
-  <tabstop>pushButton_2</tabstop>
+  <tabstop>pushButton_member_showOrder</tabstop>
+  <tabstop>pushButton_member_deleteOrder</tabstop>
+  <tabstop>pushButton_member_editOrder</tabstop>
  </tabstops>
  <resources>
   <include location="sources.qrc"/>

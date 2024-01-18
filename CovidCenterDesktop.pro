@@ -24,7 +24,11 @@ SOURCES += \
     services/clientsauthservice.cpp \
     services/httpclient.cpp \
     services/membersauthservice.cpp \
-    timerthread.cpp
+    timerthread.cpp \
+    models/service.cpp \
+    models/analyzerresult.cpp \
+    models/user.cpp \
+    models/servicedata.cpp
 
 HEADERS += \
     customstyles.h \
@@ -41,7 +45,11 @@ HEADERS += \
     services/clientsauthservice.h \
     services/httpclient.h \
     services/membersauthservice.h \
-    timerthread.h
+    timerthread.h \
+    models/service.h \
+    models/analyzerresult.h \
+    models/user.h \
+    models/servicedata.h
 
 FORMS += \
     mainwindow.ui

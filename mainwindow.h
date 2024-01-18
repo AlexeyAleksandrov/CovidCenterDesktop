@@ -6,6 +6,7 @@
 #include <QMainWindow>
 #include <QTimer>
 #include <QCloseEvent>
+#include <QTableWidget>
 
 #include <models/jwttoken.h>
 
@@ -37,6 +38,12 @@ private slots:
     void closeEvent(QCloseEvent *closeEvent);
 
     void on_pushButton_updateMemberOrdersList_clicked();
+
+    void on_pushButton_member_showOrder_clicked();
+
+    void on_pushButton_member_showOrder_return_clicked();
+
+    void on_tableWidget_memberOrdersList_itemClicked(QTableWidgetItem *item);
 
 private:
     Ui::MainWindow *ui;
