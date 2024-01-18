@@ -20,6 +20,7 @@
 #define PAGE_AUTH 0
 #define PAGE_MEMBER 1
 #define PAGE_MEMBER_SHOW_ORDER 2
+#define PAGE_MEMBER_EDIT_ORDER 3
 
 #define PAGE_CLIENT_AUTH 0
 #define PAGE_CLIENT_REGISTRATION 1
@@ -323,7 +324,7 @@ void MainWindow::on_pushButton_member_showOrder_clicked()
     qDebug() << "Services:";
 
     QList<ServiceData> services;
-    for (QJsonValue serviceValue : servicesArray)
+    for (const QJsonValue &serviceValue : qAsConst(servicesArray))
     {
         ServiceData serviceData;
         serviceData.fromJson(serviceValue.toObject());
@@ -409,3 +410,111 @@ void MainWindow::on_pushButton_member_deleteOrder_clicked()
 
     ui->tableWidget_memberOrdersList->removeRow(row);
 }
+
+// редактирование заказа
+void MainWindow::on_pushButton_member_editOrder_clicked()
+{
+    QList<QTableWidgetItem*> selectedItems = ui->tableWidget_memberOrdersList->selectedItems();
+    if(selectedItems.isEmpty())
+    {
+        QMessageBox::warning(this, "Ошибка", "Выберите заказ для просмотра!");
+        return;
+    }
+
+    int row = selectedItems.first()->row();
+    int orderId = ui->tableWidget_memberOrdersList->item(row, 0)->text().toInt();
+
+    QUrl url(QString("http://localhost:8080/api/v1/orders/%1").arg(orderId));     // адрес
+
+    QString errorText;
+    QString result = HttpClient::sendGetHttpRequest(url, jwtToken->getToken(), errorText);     // выполняем get-запрос
+
+    if(!errorText.isEmpty())    // если есть ошибка
+    {
+        QMessageBox::warning(this, "Ошибка", errorText);
+        return;
+    }
+
+    // Преобразование JSON-строки в QJsonDocument
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(result.toUtf8());
+
+    // Получение основного объекта JSON
+    QJsonObject jsonObject = jsonDocument.object();
+
+    // Извлечение данных из объекта JSON
+    int id = jsonObject.value("id").toInt();
+    QString createDate = jsonObject.value("createDate").toString();
+    QString status = jsonObject.value("status").toString();
+
+    Q_UNUSED(id);
+    // Извлечение массива "services"
+    QJsonArray servicesArray = jsonObject.value("services").toArray();
+    qDebug() << "Services:";
+
+//    QList<ServiceData> services;
+    services.clear();
+    for (const QJsonValue &serviceValue : qAsConst(servicesArray))
+    {
+        ServiceData serviceData;
+        serviceData.fromJson(serviceValue.toObject());
+
+        services.append(serviceData);
+    }
+
+    // Извлечение объекта "user"
+    User user;
+    user.fromJson(jsonObject.value("user").toObject());
+
+    ui->groupBox_member_editOrder->setTitle(QString("Заказ №%1").arg(orderId));
+    ui->lineEdit_member_editOrder_orderId->setText(QString("%1").arg(orderId));
+    ui->lineEdit_member_editOrder_fio->setText(user.fullName);
+    ui->comboBox_member_editOrder_status->setCurrentIndex(ui->comboBox_member_editOrder_status->findText(status));
+
+    ui->tableWidget_member_editOrder_services->setRowCount(services.size());
+
+    for (int i=0; i<services.size(); i++)
+    {
+        ui->tableWidget_member_editOrder_services->setItem(i, 0, new QTableWidgetItem(services.at(i).service.serviceName));
+        ui->tableWidget_member_editOrder_services->setItem(i, 1, new QTableWidgetItem(QString::number(services.at(i).service.price)));
+        ui->tableWidget_member_editOrder_services->setItem(i, 2, new QTableWidgetItem(services.at(i).analyzerResult.status));
+    }
+
+    ui->stackedWidget_main->setCurrentIndex(PAGE_MEMBER_EDIT_ORDER);
+    clearFocus();
+}
+
+// возврат из редактирования
+void MainWindow::on_pushButton_member_editOrder_return_clicked()
+{
+    ui->stackedWidget_main->setCurrentIndex(PAGE_MEMBER);
+    clearFocus();
+}
+
+// обработка изменения заказа
+void MainWindow::on_pushButton_member_editOrder_applyChanges_clicked()
+{
+    int orderId = ui->lineEdit_member_editOrder_orderId->text().toInt();
+
+    QUrl url(QString("http://localhost:8080/api/v1/orders/%1").arg(orderId));     // адрес
+
+    QJsonObject json;
+    QJsonArray servicesArray;
+    for (const ServiceData &serviceData : qAsConst(services))
+    {
+        servicesArray.append(QJsonValue(serviceData.service.id));
+    }
+    json["services"] = servicesArray;
+    json["orderStatus"] = ui->comboBox_member_editOrder_status->currentText();
+
+    QString errorText;
+    QString result = HttpClient::sendPutRequest(url, json, jwtToken->getToken(), errorText);     // выполняем get-запрос
+
+    if(!errorText.isEmpty())    // если есть ошибка
+    {
+        QMessageBox::warning(this, "Ошибка", errorText);
+        return;
+    }
+
+    QMessageBox::information(this, "Успех", "Данные обновлены!");
+}
+

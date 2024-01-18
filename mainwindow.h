@@ -9,6 +9,7 @@
 #include <QTableWidget>
 
 #include <models/jwttoken.h>
+#include <models/servicedata.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -47,6 +48,12 @@ private slots:
 
     void on_pushButton_member_deleteOrder_clicked();
 
+    void on_pushButton_member_editOrder_clicked();
+
+    void on_pushButton_member_editOrder_return_clicked();
+
+    void on_pushButton_member_editOrder_applyChanges_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -58,5 +65,7 @@ private:
     int timerTime = -1; // текущее время таймера
 
     JwtToken *jwtToken = nullptr;  // JWT токен
+
+    QList<ServiceData> services;        // услуги в заказе, с которыми мы работаем
 };
 #endif // MAINWINDOW_H

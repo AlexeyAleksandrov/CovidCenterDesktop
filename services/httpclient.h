@@ -14,6 +14,7 @@ public:
 
     static QString sendGetHttpRequest(QUrl url, QString token, QString &errorString);
     static QString sendPostRequest(QUrl url, QJsonObject json, QString token, QString &errorString);
+    static QString sendPutRequest(QUrl url, QJsonObject json, QString token, QString &errorString);
     static QString sendDeleteRequest(QUrl url, QString token, QString &errorString);
 
 signals:

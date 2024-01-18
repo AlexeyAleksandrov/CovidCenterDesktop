@@ -370,14 +370,14 @@ border: 0px;</string>
     <item row="2" column="1">
      <widget class="QStackedWidget" name="stackedWidget_main">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="page_auth">
        <layout class="QGridLayout" name="gridLayout_11">
         <item row="0" column="0">
          <widget class="QStackedWidget" name="stackedWidget_auth">
           <property name="currentIndex">
-           <number>3</number>
+           <number>2</number>
           </property>
           <widget class="QWidget" name="page_client_auth">
            <layout class="QGridLayout" name="gridLayout_2">
@@ -1639,6 +1639,166 @@ QPushButton::hover{
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="page_2">
+       <layout class="QGridLayout" name="gridLayout_18">
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_member_editOrder">
+          <property name="title">
+           <string>Заказ №0000</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_17">
+           <item row="6" column="0" colspan="4">
+            <widget class="QComboBox" name="comboBox_member_editOrder_status">
+             <item>
+              <property name="text">
+               <string>CREATED</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>IN_PROCESS</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>FINISHED</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="3" column="0" colspan="4">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>ФИО заказчика:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0" colspan="4">
+            <widget class="QLineEdit" name="lineEdit_member_editOrder_orderId">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QPushButton" name="pushButton_member_editOrder_applyChanges">
+             <property name="minimumSize">
+              <size>
+               <width>310</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Применить изменения</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="text">
+              <string>Номер заказа:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0" colspan="4">
+            <widget class="QLineEdit" name="lineEdit_member_editOrder_fio">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0" colspan="4">
+            <widget class="QTableWidget" name="tableWidget_member_editOrder_services">
+             <property name="verticalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="horizontalScrollBarPolicy">
+              <enum>Qt::ScrollBarAlwaysOff</enum>
+             </property>
+             <property name="sizeAdjustPolicy">
+              <enum>QAbstractScrollArea::AdjustToContents</enum>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+             <attribute name="horizontalHeaderDefaultSectionSize">
+              <number>240</number>
+             </attribute>
+             <column>
+              <property name="text">
+               <string>Название</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Цена</string>
+              </property>
+             </column>
+             <column>
+              <property name="text">
+               <string>Статус</string>
+              </property>
+             </column>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <spacer name="horizontalSpacer_19">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="5" column="0" colspan="4">
+            <widget class="QLabel" name="label_6">
+             <property name="text">
+              <string>Статус:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="3">
+            <widget class="QPushButton" name="pushButton_member_editOrder_return">
+             <property name="minimumSize">
+              <size>
+               <width>120</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>Назад</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0" colspan="4">
+            <widget class="QLabel" name="label_7">
+             <property name="text">
+              <string>Состав заказа:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="2">
+            <spacer name="horizontalSpacer_20">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
     <item row="2" column="2" rowspan="2">
@@ -1675,7 +1835,7 @@ QPushButton::hover{
      <x>0</x>
      <y>0</y>
      <width>883</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
